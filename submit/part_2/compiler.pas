@@ -53,7 +53,7 @@ var
     word_symbol : array [1..kReservedWords] of Symbol; {存放保留字的记号}
 
     ssym : array [char] of Symbol; {存放算符和标点符号的记号}
-    mnemonic : array [FunctionCode] of string;
+    code_str : array [FunctionCode] of string;
     {中间代码算符的字符串}
     declare_symbols, stat_begin_symbols, factor_begin_symbols : SymbolSet;
     table : array [0..kIdentsMax] of {符号表}
@@ -344,9 +344,9 @@ begin
     {code_start: 本过程第一个代码的序号,cx-1: 本过程最后一个代码的序号}
     for i := code_start to code_count - 1 do 
         with code[i] do {打印第i条代码}
-            writeln(intermediate, i:3, mnemonic[func]:5, level : 3, adr : 5)//
+            writeln(intermediate, i:3, code_str[func]:5, level : 3, adr : 5)//
     {i: 代码序号; 
-     mnemonic[f]: 功能码的字符串;
+     code_str[f]: 功能码的字符串;
      l: 相对层号(层差);
      a: 相对地址或运算号码}
 end {ListCode};
@@ -922,10 +922,12 @@ begin  {主程序}
         
     ssym[';'] := SEMICOLON;
     {算符和标点符号的记号}
-    mnemonic[LIT] := 'LIT';     mnemonic[OPR] := 'OPR';
-    mnemonic[LOD] := 'LOD';    mnemonic[STO] := 'STO';
-    mnemonic[CAL] := 'CAL';    mnemonic[INT] := 'INT';
-    mnemonic[JMP] := 'JMP';    mnemonic[JPC] := 'JPC';
+    code_str[LIT] := 'LIT';     code_str[OPR] := 'OPR';
+    code_str[LOD] := 'LOD';    code_str[STO] := 'STO';
+    code_str[CAL] := 'CAL';    code_str[INT] := 'INT';
+    code_str[JMP] := 'JMP';    code_str[JPC] := 'JPC';
+    code_str[RED] := 'RED';    code_str[WRT] := 'WRT';
+    
     {中间代码指令的字符串}
     declare_symbols := [CONSTSYM, VARSYM, PROCSYM];
     {说明语句的开始符号}
